@@ -7,6 +7,7 @@ import authRoutes from './modules/auth/auth.routes';
 import propertyRoutes from './modules/property/property.routes';
 import categoryRoutes from './modules/property/category.routes';
 import landlordRoutes from './modules/landlord/landlord.routes';
+import rentalRoutes from './modules/rental/rental.routes';
 import errorHandler from './middleware/errorHandler';
 import AppError from './utils/AppError';
 
@@ -29,6 +30,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/properties', propertyRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/landlord', landlordRoutes);
+app.use('/api/rentals', rentalRoutes);
 
 // 404 handler
 app.all('*', (_req, _res, next) => {

@@ -1,3 +1,5 @@
+// ===== _base.prisma =====
+
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -33,6 +35,9 @@ enum PaymentProvider {
   sslcommerz
 }
 
+
+// ===== user.prisma =====
+
 model User {
   id        String   @id @default(uuid())
   name      String
@@ -51,6 +56,9 @@ model User {
   reviews        Review[]
 }
 
+
+// ===== category.prisma =====
+
 model Category {
   id          String   @id @default(uuid())
   name        String   @unique
@@ -59,6 +67,9 @@ model Category {
 
   properties Property[]
 }
+
+
+// ===== property.prisma =====
 
 model Property {
   id          String   @id @default(uuid())
@@ -91,6 +102,9 @@ model Property {
   @@index([categoryId])
 }
 
+
+// ===== rental-request.prisma =====
+
 model RentalRequest {
   id        String       @id @default(uuid())
   status    RentalStatus @default(pending)
@@ -111,6 +125,9 @@ model RentalRequest {
   reviews  Review[]
 }
 
+
+// ===== payment.prisma =====
+
 model Payment {
   id            String         @id @default(uuid())
   amount        Float
@@ -126,6 +143,9 @@ model Payment {
   rentalRequestId String
   rentalRequest  RentalRequest @relation(fields: [rentalRequestId], references: [id])
 }
+
+
+// ===== review.prisma =====
 
 model Review {
   id        String   @id @default(uuid())
