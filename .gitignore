@@ -3,7 +3,4 @@ dist/
 .env
 *.log
 .DS_Store
-STEPS.md
 /src/generated/prisma
-API_DOCUMENTATION.md
-.vercel

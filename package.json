@@ -8,7 +8,6 @@
     "build": "node prisma/combine.js && npx prisma generate && tsc",
     "start": "node dist/server.js",
     "seed": "ts-node-dev src/seed.ts",
-    "seed:categories": "ts-node-dev src/seed-categories.ts",
     "prisma:build": "node prisma/combine.js && npx prisma generate"
   },
   "keywords": [],
