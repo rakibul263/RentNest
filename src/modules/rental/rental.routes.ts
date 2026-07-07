@@ -3,7 +3,7 @@ import {
   createRentalRequest,
   getMyRentalRequests,
   getRentalRequestById,
-} from './rental.controller';
+} from './controllers';
 import { createRentalValidation } from './rental.validation';
 import validate from '../../middleware/validate';
 import { authenticate, authorize } from '../../middleware/auth';

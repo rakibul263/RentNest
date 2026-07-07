@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import prisma from '../../config/prisma';
-import catchAsync from '../../utils/catchAsync';
-import sendResponse from '../../utils/sendResponse';
+import prisma from '../../../config/prisma';
+import catchAsync from '../../../utils/catchAsync';
+import sendResponse from '../../../utils/sendResponse';
 
-export const getAllCategories = catchAsync(
+export default catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const categories = await prisma.category.findMany({
       orderBy: { name: 'asc' },

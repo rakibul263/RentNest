@@ -5,7 +5,7 @@ import {
   deleteProperty,
   getLandlordRequests,
   updateRequestStatus,
-} from './landlord.controller';
+} from './controllers';
 import {
   createPropertyValidation,
   updatePropertyValidation,

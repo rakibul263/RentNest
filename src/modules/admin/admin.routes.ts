@@ -6,7 +6,7 @@ import {
   getAllRentals,
   createCategory,
   deleteCategory,
-} from './admin.controller';
+} from './controllers';
 import {
   updateUserStatusValidation,
   createCategoryValidation,

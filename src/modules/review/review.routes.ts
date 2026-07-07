@@ -3,7 +3,7 @@ import {
   createReview,
   getPropertyReviews,
   getMyReviews,
-} from './review.controller';
+} from './controllers';
 import { createReviewValidation } from './review.validation';
 import validate from '../../middleware/validate';
 import { authenticate, authorize } from '../../middleware/auth';

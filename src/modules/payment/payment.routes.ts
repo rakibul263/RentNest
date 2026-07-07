@@ -4,7 +4,7 @@ import {
   confirmPayment,
   getPaymentHistory,
   getPaymentById,
-} from './payment.controller';
+} from './controllers';
 import {
   createPaymentValidation,
   confirmPaymentValidation,
