@@ -1,5 +1,3 @@
-// ===== _base.prisma =====
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -8,6 +6,8 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// ===== ENUMS =====
 
 enum UserRole {
   tenant
@@ -35,8 +35,7 @@ enum PaymentProvider {
   sslcommerz
 }
 
-
-// ===== user.prisma =====
+// ===== USER =====
 
 model User {
   id        String   @id @default(uuid())
@@ -56,8 +55,7 @@ model User {
   reviews        Review[]
 }
 
-
-// ===== category.prisma =====
+// ===== CATEGORY =====
 
 model Category {
   id          String   @id @default(uuid())
@@ -68,8 +66,7 @@ model Category {
   properties Property[]
 }
 
-
-// ===== property.prisma =====
+// ===== PROPERTY =====
 
 model Property {
   id          String   @id @default(uuid())
@@ -92,9 +89,9 @@ model Property {
   updatedAt   DateTime @updatedAt
 
   landlordId    String
-  landlord      User         @relation(fields: [landlordId], references: [id])
+  landlord      User            @relation(fields: [landlordId], references: [id])
   categoryId    String
-  category      Category     @relation(fields: [categoryId], references: [id])
+  category      Category        @relation(fields: [categoryId], references: [id])
   rentalRequests RentalRequest[]
   reviews       Review[]
 
@@ -102,8 +99,7 @@ model Property {
   @@index([categoryId])
 }
 
-
-// ===== rental-request.prisma =====
+// ===== RENTAL REQUEST =====
 
 model RentalRequest {
   id        String       @id @default(uuid())
@@ -115,18 +111,17 @@ model RentalRequest {
   updatedAt DateTime     @updatedAt
 
   tenantId   String
-  tenant     User    @relation("TenantRequests", fields: [tenantId], references: [id])
+  tenant     User      @relation("TenantRequests", fields: [tenantId], references: [id])
   propertyId String
-  property   Property @relation(fields: [propertyId], references: [id])
+  property   Property  @relation(fields: [propertyId], references: [id])
   landlordId String
-  landlord   User    @relation("LandlordRequests", fields: [landlordId], references: [id])
+  landlord   User      @relation("LandlordRequests", fields: [landlordId], references: [id])
 
   payments Payment[]
   reviews  Review[]
 }
 
-
-// ===== payment.prisma =====
+// ===== PAYMENT =====
 
 model Payment {
   id            String         @id @default(uuid())
@@ -144,8 +139,7 @@ model Payment {
   rentalRequest  RentalRequest @relation(fields: [rentalRequestId], references: [id])
 }
 
-
-// ===== review.prisma =====
+// ===== REVIEW =====
 
 model Review {
   id        String   @id @default(uuid())
