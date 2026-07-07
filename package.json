@@ -4,11 +4,12 @@
   "description": "RentNest - Rental Property Marketplace API",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "tsc",
+    "dev": "node prisma/combine.js && ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "node prisma/combine.js && npx prisma generate && tsc",
     "start": "node dist/server.js",
     "seed": "ts-node-dev src/seed.ts",
-    "seed:categories": "ts-node-dev src/seed-categories.ts"
+    "seed:categories": "ts-node-dev src/seed-categories.ts",
+    "prisma:build": "node prisma/combine.js && npx prisma generate"
   },
   "keywords": [],
   "author": "",

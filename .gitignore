@@ -6,3 +6,4 @@ dist/
 STEPS.md
 /src/generated/prisma
 API_DOCUMENTATION.md
+.vercel
