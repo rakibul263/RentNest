@@ -1,7 +1,9 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import dotenv from 'dotenv';
 import connectDB from './config/db';
 import authRoutes from './modules/auth/auth.routes';
 import propertyRoutes from './modules/property/property.routes';
@@ -10,8 +12,6 @@ import landlordRoutes from './modules/landlord/landlord.routes';
 import rentalRoutes from './modules/rental/rental.routes';
 import errorHandler from './middleware/errorHandler';
 import AppError from './utils/AppError';
-
-dotenv.config();
 
 const app = express();
 
@@ -33,7 +33,7 @@ app.use('/api/landlord', landlordRoutes);
 app.use('/api/rentals', rentalRoutes);
 
 // 404 handler
-app.all('*', (_req, _res, next) => {
+app.use((_req, _res, next) => {
   next(new AppError('Route not found', 404));
 });
 
