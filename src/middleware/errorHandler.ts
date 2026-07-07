@@ -19,6 +19,21 @@ const errorHandler = (
 
   // Prisma known errors
   if (err.name === 'PrismaClientKnownRequestError') {
+    const prismaErr = err as any;
+    if (prismaErr.code === 'P2002') {
+      return res.status(409).json({
+        success: false,
+        message: 'A record with this value already exists',
+        errorDetails: err.message,
+      });
+    }
+    if (prismaErr.code === 'P2025') {
+      return res.status(404).json({
+        success: false,
+        message: 'Record not found',
+        errorDetails: err.message,
+      });
+    }
     return res.status(400).json({
       success: false,
       message: 'Database operation failed',
