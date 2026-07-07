@@ -102,13 +102,3 @@ export const getPropertyById = catchAsync(
     sendResponse(res, 200, 'Property fetched successfully', property);
   }
 );
-
-export const getAllCategories = catchAsync(
-  async (_req: Request, res: Response) => {
-    const categories = await prisma.category.findMany({
-      orderBy: { name: 'asc' },
-    });
-
-    sendResponse(res, 200, 'Categories fetched successfully', categories);
-  }
-);
