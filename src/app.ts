@@ -3,6 +3,9 @@ import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import connectDB from './config/db';
+import authRoutes from './modules/auth/auth.routes';
+import propertyRoutes from './modules/property/property.routes';
+import categoryRoutes from './modules/property/category.routes';
 import errorHandler from './middleware/errorHandler';
 import AppError from './utils/AppError';
 
@@ -20,6 +23,10 @@ app.use(morgan('dev'));
 app.get('/api/health', (_req, res) => {
   res.json({ success: true, message: 'RentNest API is running' });
 });
+
+app.use('/api/auth', authRoutes);
+app.use('/api/properties', propertyRoutes);
+app.use('/api/categories', categoryRoutes);
 
 // 404 handler
 app.all('*', (_req, _res, next) => {
