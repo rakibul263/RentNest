@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Response, NextFunction } from 'express';
 import prisma from '../../config/prisma';
 import { AuthRequest } from '../../types';
 import AppError from '../../utils/AppError';
@@ -6,7 +6,7 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 
 export const getAllUsers = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 20;
     const skip = (page - 1) * limit;
@@ -45,7 +45,7 @@ export const getAllUsers = catchAsync(
 );
 
 export const updateUserStatus = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const { id } = req.params as { id: string };
     const { isBanned } = req.body;
 
@@ -81,7 +81,7 @@ export const updateUserStatus = catchAsync(
 );
 
 export const getAllProperties = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 20;
     const skip = (page - 1) * limit;
@@ -113,7 +113,7 @@ export const getAllProperties = catchAsync(
 );
 
 export const getAllRentals = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 20;
     const skip = (page - 1) * limit;
@@ -147,7 +147,7 @@ export const getAllRentals = catchAsync(
 );
 
 export const createCategory = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const { name, description } = req.body;
 
     const existing = await prisma.category.findUnique({
@@ -167,7 +167,7 @@ export const createCategory = catchAsync(
 );
 
 export const deleteCategory = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const { id } = req.params as { id: string };
 
     const category = await prisma.category.findUnique({ where: { id } });

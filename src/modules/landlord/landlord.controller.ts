@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Response, NextFunction } from 'express';
 import prisma from '../../config/prisma';
 import { AuthRequest } from '../../types';
 import AppError from '../../utils/AppError';
@@ -6,7 +6,7 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 
 export const createProperty = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const {
       title,
       description,
@@ -57,7 +57,7 @@ export const createProperty = catchAsync(
 );
 
 export const updateProperty = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const { id } = req.params as { id: string };
     const updateData = req.body;
 
@@ -104,7 +104,7 @@ export const updateProperty = catchAsync(
 );
 
 export const deleteProperty = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const { id } = req.params as { id: string };
 
     const existing = await prisma.property.findUnique({
@@ -126,7 +126,7 @@ export const deleteProperty = catchAsync(
 );
 
 export const getLandlordRequests = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const requests = await prisma.rentalRequest.findMany({
       where: { landlordId: req.user!.id },
       include: {
@@ -150,7 +150,7 @@ export const getLandlordRequests = catchAsync(
 );
 
 export const updateRequestStatus = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const { id } = req.params as { id: string };
     const { status } = req.body;
 

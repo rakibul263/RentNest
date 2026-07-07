@@ -11,7 +11,7 @@ interface JwtPayload {
 }
 
 export const authenticate = catchAsync(
-  async (req: AuthRequest, _res: Response, next: NextFunction) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     let token: string | undefined;
 
     if (
@@ -48,7 +48,7 @@ export const authenticate = catchAsync(
 );
 
 export const authorize = (...roles: UserRole[]) => {
-  return (req: AuthRequest, _res: Response, next: NextFunction) => {
+  return (req: AuthRequest, res: Response, next: NextFunction) => {
     if (!req.user || !roles.includes(req.user.role)) {
       throw new AppError(
         'You do not have permission to perform this action',

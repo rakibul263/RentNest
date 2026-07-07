@@ -3,9 +3,9 @@ import AppError from '../utils/AppError';
 
 const errorHandler = (
   err: Error,
-  _req: Request,
+  req: Request,
   res: Response,
-  _next: NextFunction
+  next: NextFunction
 ) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({

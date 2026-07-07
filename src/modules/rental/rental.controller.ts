@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Response, NextFunction } from 'express';
 import prisma from '../../config/prisma';
 import { AuthRequest } from '../../types';
 import AppError from '../../utils/AppError';
@@ -6,7 +6,7 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 
 export const createRentalRequest = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const { propertyId, startDate, endDate, message } = req.body;
 
     const property = await prisma.property.findUnique({
@@ -66,7 +66,7 @@ export const createRentalRequest = catchAsync(
 );
 
 export const getMyRentalRequests = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const requests = await prisma.rentalRequest.findMany({
       where: { tenantId: req.user!.id },
       include: {
@@ -97,7 +97,7 @@ export const getMyRentalRequests = catchAsync(
 );
 
 export const getRentalRequestById = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const { id } = req.params as { id: string };
 
     const rentalRequest = await prisma.rentalRequest.findUnique({

@@ -1,11 +1,11 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import prisma from '../../config/prisma';
 import AppError from '../../utils/AppError';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 
 export const getAllProperties = catchAsync(
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     const {
       location,
       minPrice,
@@ -76,7 +76,7 @@ export const getAllProperties = catchAsync(
 );
 
 export const getPropertyById = catchAsync(
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params as { id: string };
 
     const property = await prisma.property.findUnique({

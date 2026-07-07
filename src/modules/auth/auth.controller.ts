@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import prisma from '../../config/prisma';
@@ -14,7 +14,7 @@ const generateToken = (id: string, role: string): string => {
 };
 
 export const register = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const { name, email, password, role, phone } = req.body;
 
     const existingUser = await prisma.user.findUnique({
@@ -56,7 +56,7 @@ export const register = catchAsync(
 );
 
 export const login = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
 
     const user = await prisma.user.findUnique({
@@ -94,7 +94,7 @@ export const login = catchAsync(
 );
 
 export const getMe = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const user = await prisma.user.findUnique({
       where: { id: req.user!.id },
       select: {

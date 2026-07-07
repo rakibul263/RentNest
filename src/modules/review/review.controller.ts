@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import prisma from '../../config/prisma';
 import { AuthRequest } from '../../types';
 import AppError from '../../utils/AppError';
@@ -6,7 +6,7 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 
 export const createReview = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const { propertyId, rentalRequestId, rating, comment } = req.body;
 
     const rentalRequest = await prisma.rentalRequest.findUnique({
@@ -66,7 +66,7 @@ export const createReview = catchAsync(
 );
 
 export const getPropertyReviews = catchAsync(
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     const { propertyId } = req.query;
 
     const where: any = {};
@@ -87,7 +87,7 @@ export const getPropertyReviews = catchAsync(
 );
 
 export const getMyReviews = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const reviews = await prisma.review.findMany({
       where: { tenantId: req.user!.id },
       include: {

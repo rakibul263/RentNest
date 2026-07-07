@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Response, NextFunction } from 'express';
 import Stripe from 'stripe';
 import prisma from '../../config/prisma';
 import { AuthRequest, PaymentProvider, PaymentStatus } from '../../types';
@@ -9,7 +9,7 @@ import sendResponse from '../../utils/sendResponse';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export const createPaymentIntent = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const { rentalRequestId } = req.body;
 
     const rentalRequest = await prisma.rentalRequest.findUnique({
@@ -78,7 +78,7 @@ export const createPaymentIntent = catchAsync(
 );
 
 export const confirmPayment = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const { paymentId, transactionId } = req.body;
 
     const payment = await prisma.payment.findUnique({
@@ -129,7 +129,7 @@ export const confirmPayment = catchAsync(
 );
 
 export const getPaymentHistory = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const payments = await prisma.payment.findMany({
       where: { tenantId: req.user!.id },
       include: {
@@ -149,7 +149,7 @@ export const getPaymentHistory = catchAsync(
 );
 
 export const getPaymentById = catchAsync(
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response, next: NextFunction) => {
     const { id } = req.params as { id: string };
 
     const payment = await prisma.payment.findUnique({
