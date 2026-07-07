@@ -5,8 +5,8 @@ import catchAsync from '../../../utils/catchAsync';
 import sendResponse from '../../../utils/sendResponse';
 
 export default catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { id } = req.params as { id: string };
+  async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
+    const { id } = req.params;
 
     const property = await prisma.property.findUnique({
       where: { id },
