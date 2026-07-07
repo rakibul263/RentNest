@@ -1,0 +1,343 @@
+{
+  "info": {
+    "name": "RentNest API",
+    "description": "API for RentNest - Rental Property Marketplace",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/api/auth/register",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"tenant\",\n  \"phone\": \"01712345678\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/api/auth/login",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Me",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/auth/me",
+            "header": [{"key": "Authorization", "value": "Bearer {{TOKEN}}"}]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Properties (Public)",
+      "item": [
+        {
+          "name": "Get All Properties",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{BASE_URL}}/api/properties?page=1&limit=10",
+              "query": [
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"},
+                {"key": "city", "value": "", "disabled": true},
+                {"key": "minPrice", "value": "", "disabled": true},
+                {"key": "maxPrice", "value": "", "disabled": true},
+                {"key": "category", "value": "", "disabled": true},
+                {"key": "bedrooms", "value": "", "disabled": true}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Property By ID",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/properties/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/categories"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Landlord",
+      "item": [
+        {
+          "name": "Create Property",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/api/landlord/properties",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{TOKEN}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Cozy Apartment\",\n  \"description\": \"A beautiful apartment in the city center.\",\n  \"categoryId\": \"CATEGORY_ID\",\n  \"price\": 1500,\n  \"address\": \"123 Main St\",\n  \"city\": \"New York\",\n  \"state\": \"NY\",\n  \"zipCode\": \"10001\",\n  \"bedrooms\": 2,\n  \"bathrooms\": 1,\n  \"area\": 850,\n  \"amenities\": [\"WiFi\", \"Parking\", \"AC\"],\n  \"images\": []\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Property",
+          "request": {
+            "method": "PUT",
+            "url": "{{BASE_URL}}/api/landlord/properties/:id",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{TOKEN}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 1700,\n  \"isAvailable\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Property",
+          "request": {
+            "method": "DELETE",
+            "url": "{{BASE_URL}}/api/landlord/properties/:id",
+            "header": [{"key": "Authorization", "value": "Bearer {{TOKEN}}"}]
+          }
+        },
+        {
+          "name": "Get Rental Requests",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/landlord/requests",
+            "header": [{"key": "Authorization", "value": "Bearer {{TOKEN}}"}]
+          }
+        },
+        {
+          "name": "Approve/Reject Request",
+          "request": {
+            "method": "PATCH",
+            "url": "{{BASE_URL}}/api/landlord/requests/:id",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{TOKEN}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rental Requests",
+      "item": [
+        {
+          "name": "Submit Rental Request",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/api/rentals",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{TOKEN}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"propertyId\": \"PROPERTY_ID\",\n  \"startDate\": \"2026-08-01\",\n  \"endDate\": \"2027-01-31\",\n  \"message\": \"I am interested in renting this property.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get My Requests",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/rentals",
+            "header": [{"key": "Authorization", "value": "Bearer {{TOKEN}}"}]
+          }
+        },
+        {
+          "name": "Get Request Details",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/rentals/:id",
+            "header": [{"key": "Authorization", "value": "Bearer {{TOKEN}}"}]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Create Payment Intent",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/api/payments/create-payment-intent",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{TOKEN}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rentalRequestId\": \"RENTAL_REQUEST_ID\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Confirm Payment",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/api/payments/confirm",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{TOKEN}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentId\": \"PAYMENT_ID\",\n  \"transactionId\": \"STRIPE_PAYMENT_INTENT_ID\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Payment History",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/payments",
+            "header": [{"key": "Authorization", "value": "Bearer {{TOKEN}}"}]
+          }
+        },
+        {
+          "name": "Get Payment Details",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/payments/:id",
+            "header": [{"key": "Authorization", "value": "Bearer {{TOKEN}}"}]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Create Review",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/api/reviews",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{TOKEN}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"propertyId\": \"PROPERTY_ID\",\n  \"rentalRequestId\": \"RENTAL_REQUEST_ID\",\n  \"rating\": 5,\n  \"comment\": \"Great place to live!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Property Reviews",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/reviews?propertyId=PROPERTY_ID"
+          }
+        },
+        {
+          "name": "Get My Reviews",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/reviews/my",
+            "header": [{"key": "Authorization", "value": "Bearer {{TOKEN}}"}]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/admin/users",
+            "header": [{"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}]
+          }
+        },
+        {
+          "name": "Ban/Unban User",
+          "request": {
+            "method": "PATCH",
+            "url": "{{BASE_URL}}/api/admin/users/:id",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isBanned\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Get All Properties",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/admin/properties",
+            "header": [{"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}]
+          }
+        },
+        {
+          "name": "Get All Rentals",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/admin/rentals",
+            "header": [{"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}]
+          }
+        },
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/api/admin/categories",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Penthouse\",\n  \"description\": \"Luxury top-floor apartments\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "url": "{{BASE_URL}}/api/admin/categories/:id",
+            "header": [{"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}]
+          }
+        }
+      ]
+    }
+  ]
+}
