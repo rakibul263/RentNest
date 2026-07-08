@@ -42,6 +42,7 @@ export default catchAsync(
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amountInCents,
       currency: 'usd',
+      automatic_payment_methods: { enabled: true, allow_redirects: 'never' },
       metadata: { rentalRequestId, tenantId: req.user!.id },
     });
 
@@ -57,6 +58,7 @@ export default catchAsync(
     sendResponse(res, 201, 'Payment intent created', {
       clientSecret: paymentIntent.client_secret,
       paymentId: payment.id,
+      transactionId: paymentIntent.id,
       amount: rentalRequest.property.price,
     });
   }

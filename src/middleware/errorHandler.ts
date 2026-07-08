@@ -17,7 +17,7 @@ const errorHandler = (
     });
   }
 
-  // Prisma known errors
+  // Prisma known errors (e.g., unique constraint, record not found)
   if (err.name === 'PrismaClientKnownRequestError') {
     const prismaErr = err as any;
     if (prismaErr.code === 'P2002') {
@@ -38,6 +38,34 @@ const errorHandler = (
       success: false,
       message: 'Database operation failed',
       errorDetails: err.message,
+    });
+  }
+
+  // Prisma validation errors (invalid UUID, missing fields, etc.)
+  if (err.name === 'PrismaClientValidationError') {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid data provided',
+      errorDetails: process.env.NODE_ENV === 'development' ? err.message : undefined,
+    });
+  }
+
+  // Prisma initialization error (DB connection issues)
+  if (err.name === 'PrismaClientInitializationError') {
+    return res.status(500).json({
+      success: false,
+      message: 'Database connection error',
+      errorDetails: process.env.NODE_ENV === 'development' ? err.message : undefined,
+    });
+  }
+
+  // Stripe errors (invalid API key, rate limit, invalid transaction, etc.)
+  if ((err as any).type && typeof (err as any).type === 'string' && (err as any).type.startsWith('Stripe')) {
+    const statusCode = (err as any).statusCode || 400;
+    return res.status(statusCode).json({
+      success: false,
+      message: err.message || 'Payment processing error',
+      errorDetails: process.env.NODE_ENV === 'development' ? err.stack : undefined,
     });
   }
 
