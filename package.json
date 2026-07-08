@@ -25,6 +25,7 @@
     "express-validator": "^7.3.2",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.11.0",
+    "postman-to-openapi": "^1.7.3",
     "stripe": "^22.3.0"
   },
   "devDependencies": {
